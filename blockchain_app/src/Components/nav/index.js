@@ -1,10 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-// import "./nav.css"
 
 const Navbar = () => {
   return (
-    <nav className="navbar">
+    <nav className="navbar" style={{width:"100%"}}>
       <ul className="navbar-list">
         <li className="navbar-item"> 
             <NavLink 
