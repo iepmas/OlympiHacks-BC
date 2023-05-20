@@ -10,20 +10,21 @@
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    color: var(--white);
-    background-color: var(--blue2);
+    color: var(--c2);
+    background-color: var(--c3);
+    border: 1px solid var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow);
   }
   
   .title h1{
     margin: 0;
+    color: var(--c3);
   }
   
   .title hr.rounded {
-    border-top: 5px solid var(--divider);
+    border-top: 5px solid var(--c3);
     border-radius: 5px;
     width: 100%;
   }

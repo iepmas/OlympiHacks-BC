@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+
 import { Title } from "../title";
 import { BsFillPeopleFill as Icon} from "react-icons/bs";
 import Table from "./table";
@@ -14,6 +17,14 @@ function People() {
     useEffect(() => {
         loadTable()
     }, [])
+
+    function titleCase(str) {
+        var splitStr = str.toLowerCase().split(' ');
+        for (var i = 0; i < splitStr.length; i++) {
+            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+        }
+        return splitStr.join(' '); 
+     }
     
     const handlePopupClick = () => {
         setPopupOpen(!popupOpen)
@@ -30,17 +41,33 @@ function People() {
     return(
         <section>
             <Title title={"People"} icon={Icon}/>
+            {popupOpen &&
             <Button 
-            style={{margin:"10px"}}
-            onClick={handlePopupClick}> {popupOpen ? "Close" : "Add Employee"}</Button>
-            {popupOpen && 
-            <div>
-                Data
-            </div>
+                style={{margin:"10px"}}
+                onClick={handlePopupClick}> Add Employee
+            </Button>
             }
+            <Button 
+                style={{margin:"10px"}}
+                onClick={handlePopupClick}> {popupOpen ? "Close" : "Add Employee"}
+            </Button>
+            {popupOpen && 
+            <div style={{width: "500px", margin:"0px auto"}}>
+                {Object.keys(data[0]).map(text => 
+                    <InputGroup className="mb-3">
+                        <InputGroup.Text id="inputGroup-sizing-default" style={{width:"125px", textAlign:"right"}}>
+                        {titleCase(text)}
+                        </InputGroup.Text>
+                        <Form.Control
+                        aria-label="Default"
+                        aria-describedby="inputGroup-sizing-default"
+                        />
+                    </InputGroup>
+                )}
+            </div>}
             {loaded ? 
             <div className="container">
-                <Table datas={data}/>
+                {!popupOpen && <Table datas={data}/>}
             </div> : <p>Loading...</p>}
         </section>
     );
