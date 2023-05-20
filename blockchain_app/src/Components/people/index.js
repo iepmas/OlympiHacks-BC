@@ -12,13 +12,27 @@ import {
     // FileIo,
     // FileDownloadHandler,
     // FileUploadHandler, 
+    WalletHandler, IChainConfig
 } from "jackal.js"
+
+
 
 
 function People() {
     const [popupOpen, setPopupOpen] = useState(false)
     const [data, setData] = useState([])
     const [loaded, setLoaded] = useState(false)
+
+    const walletConfig =
+    {
+    signerChain: 'jackal-1',
+    enabledChains: ['jackal-1'],
+    queryAddr: 'https://kdb -grpc.jackalprotocol.com',
+    txAddr: 'https://kdb-rpc.jackalprotocol.com',
+    chainConfig: IChainConfig
+    }
+
+    const wallet = WalletHandler.trackWallet(walletConfig);
 
     useEffect(() => {
         loadTable()
