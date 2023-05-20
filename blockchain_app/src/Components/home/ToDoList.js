@@ -1,6 +1,4 @@
 import React from "react";
-import ToDoItem from "./ToDoItem.js";
-import "./ToDoList.css";
 
 function ToDoList() {
   return (
