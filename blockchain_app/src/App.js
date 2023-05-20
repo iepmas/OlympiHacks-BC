@@ -1,11 +1,11 @@
 import React from 'react'
-import NavBar from "./Components/NavBar"
+import ToDoList from "./Components/ToDoList.js"
 import './App.css'
 
 function App() {
   return  (
     <body>
-      <NavBar/>
+      <ToDoList/>
     </body>
     )
 }
