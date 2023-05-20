@@ -1,6 +1,6 @@
 import React from "react";
 import { Title } from "../title";
-import { BsFillPeopleFill as Icon} from "react-icons/bs";
+import { AiFillHome as Icon} from "react-icons/ai";
 import ToDoList from "./ToDoList";
 
 function Home() {

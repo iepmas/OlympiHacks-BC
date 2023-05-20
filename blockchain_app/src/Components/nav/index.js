@@ -4,11 +4,13 @@ import { NavLink } from 'react-router-dom';
 const Navbar = () => {
   return (
     <div style={{display: "flex"}}>
-      <div className='logo'>
-          DC
-      </div>
       <nav className="navbar" style={{width:"100%"}}>
         <ul className="navbar-list">
+          <li>
+            <div className='logo' style={{margin:"12px"}}>
+              <img src="dc-logo.png" alt="logo"></img>
+            </div>
+          </li>
           <li className="navbar-item"> 
               <NavLink 
                   to='/' 

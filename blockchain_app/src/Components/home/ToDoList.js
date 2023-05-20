@@ -2,7 +2,7 @@ import React from "react";
 
 function ToDoList() {
   return (
-      <div style={{padding: '0px', width: '300px', margin: '20px', color:"white", background:"#03045e", borderRadius:"10px", boxShadow:"5px 5px 10px #999" }}>
+      <div style={{padding: '0px', width: '300px', margin: '20px', color:"white", background:"#03045e", borderRadius:"10px", boxShadow:"1px 1px 5px #000" }}>
         <h2 style={{ marginBottom: '0px', textAlign:"left", padding:"20px" }}>Todo</h2>
         <div style={{background:"#fff", padding:"20px", color:"black", borderRadius:" 0 0 10px 10px"}}>
           <div style={{ display: 'flex', marginBottom: '10px'}}>
