@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const NavBar= () =>{
+const Todo= () =>{
   return (
   <div>
     <li>
