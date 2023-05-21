@@ -22,7 +22,7 @@ function Reports() {
         };
       
         return (
-          <div style={{color:'#fff'}}>
+          <div style={{color:'#fff', marginLeft: "68px", marginBottom: "20px"}}>
             <input type="file" onChange={handleFileChange} />
             {selectedFile && <p>Selected file: {selectedFile.name}</p>}
           </div>
@@ -174,7 +174,10 @@ function Reports() {
     return(
         <section>
             <Title title={"Reports"} icon={Icon}/>
+            <div>
             <FileInput/>            
+            </div>
+            <div>
             <button 
                 style={{margin:"10px"}}
                 onClick={handleAddFile}> Add File
@@ -183,6 +186,7 @@ function Reports() {
                 style={{margin:"10px"}}
                 onClick={readFiles}> Read Files
             </button> 
+            </div>
             {data && data.length ? data.map(f => 
                 <FileDownload file={f} key={f.name}/> 
                 ): null}

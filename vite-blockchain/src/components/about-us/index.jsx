@@ -62,13 +62,7 @@ Nadeem is a dedicated athlete, representing both the Waterloo Warriors Varsity S
           <img src='./jon.png' alt='Jon' style={{ marginRight: "10px", width: "200px", height: "200px", borderRadius: "50%" }} />
           <div>
             <h2>Jonathan Kao</h2>
-            <p>Hey there! I'm Jonathan, a third-year swimmer representing the University of Waterloo. Currently, I'm pursuing my passion for Computer Science and diving deep into the world of coding. Balancing my athletic commitments with my academic pursuits has taught me valuable skills like discipline, time management, and perseverance.
-
-Apart from my love for swimming and coding, I have a musical side too. Back in middle school, I played the trumpet and fell in love with the power of music. It added another layer of creativity to my life and nurtured my appreciation for different forms of self-expression.
-
-When I'm not swimming or coding, I love exploring different cultures and cuisines. One place that's on the top of my travel bucket list is Taiwan. I've heard amazing things about the vibrant street vendor scene there, and I can't wait to immerse myself in the delicious local delicacies and experience the rich tapestry of Taiwanese culture.
-
-So, that's a little glimpse into who I am. I'm passionate about pushing my limits, embracing new experiences, and making a positive impact along the way. I'm excited to see where my journey takes me next!</p>
+            <p>Hey there! I'm Jonathan, a third-year swimmer representing the University of Waterloo. Currently, I'm pursuing my passion for Computer Science and diving deep into the world of coding. Balancing my athletic commitments with my academic pursuits has taught me valuable skills like discipline, time management, and perseverance.</p>
           </div>
         </div>
       

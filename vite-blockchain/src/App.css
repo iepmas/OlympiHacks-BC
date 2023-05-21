@@ -80,7 +80,7 @@
 
 html, body, #root, .App {
   background-color: var(--c1);
-  background-image: linear-gradient(315deg, var(--c1) 0%, var(--c2) 74%);
+  background-image: linear-gradient(275deg, var(--c1) 0%, var(--c2) 74%);
   height: 100%;
   width: 100%;
 }
