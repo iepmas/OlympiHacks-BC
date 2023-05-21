@@ -18,6 +18,7 @@ function People() {
     const [data, setData] = useState([])
     const [loaded, setLoaded] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [folderName, setFolderName] = useState("")
 
     const employeeInfo = [
         "id",
@@ -96,7 +97,7 @@ function People() {
         const storage = await StorageHandler.trackStorage(wallet)
 
         const f =  await FileIo.trackIo(wallet)
-        console.log(f.verifyFoldersExist(["team"]))
+        console.log(f.verifyFoldersExist([folderName]))
     }
 
     function titleCase(str) {
@@ -133,7 +134,7 @@ function People() {
             type: "application/json;charset=utf-8"
         });
         
-        const upload = await FileUploadHandler.trackFile(blob, 's/team')
+        const upload = await FileUploadHandler.trackFile(blob, `s/${folderName}`)
 
         const wallet = await WalletHandler.trackWallet(walletConfig);
         const f =  await FileIo.trackIo(wallet, '1.0.8')
@@ -148,7 +149,7 @@ function People() {
           uploadable: await upload.getForUpload()
         }
 
-        const folder = await f.downloadFolder('s/team')
+        const folder = await f.downloadFolder(`s/${folderName}`)
 
         const stagger = await f.staggeredUploadFiles(uploadList, folder, {})
         console.log(`Created file: ${fileName}`)
@@ -166,8 +167,8 @@ function People() {
         const storage = await StorageHandler.trackStorage(wallet)
 
         const s = await FileIo.trackIo(wallet)
-        const folder = await s.verifyFoldersExist(['team'])
-        const files = await s.downloadFolder('s/team')
+        const folder = await s.verifyFoldersExist([folderName])
+        const files = await s.downloadFolder(`s/${folderName}`)
         const filePaths = Object.keys(files.folderDetails.fileChildren)
         const owner = files.folderDetails.whoOwnsMe.toString()
         const result = []
@@ -176,7 +177,7 @@ function People() {
                 continue
             }
             const obj = {
-                rawPath: `s/team/${filePaths[i]}`,
+                rawPath: `s/${folderName}/${filePaths[i]}`,
                 owner: owner,
                 isFolder: false
             }
@@ -199,10 +200,27 @@ function People() {
         setLoading(false)
     }
 
+    const handleSetFolder = () => {
+        setFolderName(document.getElementById("folderName").value)
+        makeFolder()
+        alert(`Folder selected: ${folderName}`)
+    }
+
     
     return(
         <section>
             <Title title={"People"} icon={Icon}/>
+            <InputGroup className="mb-3">
+                <InputGroup.Text id="inputGroup-sizing-default" style={{width:"125px", textAlign:"right"}}>
+                Folder Name
+                </InputGroup.Text>
+                <Form.Control
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    id ='folderName'
+                />
+            </InputGroup>
+            <button onClick={handleSetFolder} style={{marginRight:"10px"}}>Set Folder</button>
             <button onClick={readEmployees}>Load Employees</button>
             {popupOpen &&
             
