@@ -10,6 +10,7 @@ Dolphin Chains HR Solutions is an HR platform available for companies of all siz
 Dolphin Chains HR Solutions has a React and ViteJS frontend that is directly integrated into the Jackal Protocol block chain via Jackal JS.
 
 ## Challenges we ran into
+We initially ran into challenges with implementing jackal.js with our project since documentation is lacking as the library is still very new.
 
 ## Accomplishments that we're proud of
 We are proud of what we managed to accomplish after working tightly with co-founders of Jackal Protocol Patrick, Marston and Aaron.
