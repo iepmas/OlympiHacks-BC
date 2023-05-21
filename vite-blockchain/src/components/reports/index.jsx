@@ -119,7 +119,6 @@ function Reports() {
     }
 
     const readFiles = async () => {
-        setLoading(true)
 
         const wallet = await WalletHandler.trackWallet(walletConfig);
         const storage = await StorageHandler.trackStorage(wallet)
@@ -150,8 +149,6 @@ function Reports() {
         console.log('DONE');
         console.log(folder)
         console.log(files)
-        setLoaded(true)
-        setLoading(false)
     }
 
 
