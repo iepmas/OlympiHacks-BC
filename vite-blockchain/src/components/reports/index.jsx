@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Title } from "../title";
 import { FaRegFile as Icon} from "react-icons/fa";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { 
     FileIo,
     FileUploadHandler, 
@@ -12,6 +14,7 @@ import {
 function Reports() {
     const [data, setData] = useState([])
     const [selectedFile, setSelectedFile] = useState(null);
+    const [folderName, setFolderName] = useState("")
 
 
     const FileInput = () => {
@@ -89,11 +92,11 @@ function Reports() {
         const storage = await StorageHandler.trackStorage(wallet)
 
         const f =  await FileIo.trackIo(wallet)
-        console.log(f.verifyFoldersExist(["documents"]))
+        console.log(f.verifyFoldersExist([folderName]))
     }
 
     const handleAddFile = async () => {
-        const upload = await FileUploadHandler.trackFile(selectedFile, 's/documents')
+        const upload = await FileUploadHandler.trackFile(selectedFile, `s/${folderName}`)
 
         const wallet = await WalletHandler.trackWallet(walletConfig);
         const f =  await FileIo.trackIo(wallet, '1.0.8')
@@ -108,7 +111,7 @@ function Reports() {
           uploadable: await upload.getForUpload()
         }
 
-        const folder = await f.downloadFolder('s/documents')
+        const folder = await f.downloadFolder(`s/${folderName}`)
 
         const stagger = await f.staggeredUploadFiles(uploadList, folder, {})
         console.log(`Added file: ${selectedFile.name}`)
@@ -124,8 +127,8 @@ function Reports() {
         const storage = await StorageHandler.trackStorage(wallet)
 
         const s = await FileIo.trackIo(wallet)
-        const folder = await s.verifyFoldersExist(['documents'])
-        const files = await s.downloadFolder('s/documents')
+        const folder = await s.verifyFoldersExist([folderName])
+        const files = await s.downloadFolder(`s/${folderName}`)
         const filePaths = Object.keys(files.folderDetails.fileChildren)
         const owner = files.folderDetails.whoOwnsMe.toString()
         const result = []
@@ -134,7 +137,7 @@ function Reports() {
                 continue
             }
             const obj = {
-                rawPath: `s/documents/${filePaths[i]}`,
+                rawPath: `s/${folderName}/${filePaths[i]}`,
                 owner: owner,
                 isFolder: false
             }
@@ -170,10 +173,29 @@ function Reports() {
         );
       };
 
+      const handleSetFolder = () => {
+        setFolderName(document.getElementById("folderName").value)
+        makeFolder()
+        alert(`Folder selected: ${folderName}`)
+    }
+
     
     return(
         <section>
             <Title title={"Reports"} icon={Icon}/>
+            <div>
+            <InputGroup className="mb-3">
+                <InputGroup.Text id="inputGroup-sizing-default" style={{width:"125px", textAlign:"right"}}>
+                Folder Name
+                </InputGroup.Text>
+                <Form.Control
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    id ='folderName'
+                />
+            </InputGroup>
+            <button onClick={handleSetFolder} style={{marginRight:"10px"}}>Set Folder</button>
+            </div>
             <div>
             <FileInput/>            
             </div>
