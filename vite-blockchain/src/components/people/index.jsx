@@ -18,6 +18,18 @@ function People() {
     const [popupOpen, setPopupOpen] = useState(false)
     const [data, setData] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const employeeInfo = [
+        "id",
+        "name",
+        "title",
+        "department",
+        "email",
+        "address",
+        "phone",
+        "bankNumber",
+    ]
 
     const chainConfig =
     {
@@ -77,16 +89,15 @@ function People() {
     
 
     useEffect(() => {
-        loadTable()
 
     }, [])
 
-    const  doStuff = async () => {
+    const  makeFolder = async () => {
         const wallet = await WalletHandler.trackWallet(walletConfig);
         const storage = await StorageHandler.trackStorage(wallet)
 
         const f =  await FileIo.trackIo(wallet)
-        console.log(f.verifyFoldersExist(["home"]))
+        console.log(f.verifyFoldersExist(["team"]))
     }
 
     function titleCase(str) {
@@ -102,101 +113,114 @@ function People() {
     }
 
     const handleAddEmployee = async () => {
-        
         const jsonData = {
             id: document.getElementById("id").value,
             name: document.getElementById("name").value,
             title: document.getElementById("title").value,
             department: document.getElementById("department").value,
             email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
+            phone: document.getElementById("phone").value,
+            bankNumber: document.getElementById("bankNumber").value,
         }
 
-        console.log(jsonData)
+        const fileName = ((document.getElementById("id").value).toString() + "_" 
+            + (document.getElementById("name").value).toString()).replace(/\s/g, '')
 
         const jsonString = JSON.stringify(jsonData);
 
         const bytes = new TextEncoder().encode(jsonString);
-        const blob = new File([bytes], 'testFile', {
+        const blob = new File([bytes], fileName, {
             type: "application/json;charset=utf-8"
         });
         
-        const upload = await FileUploadHandler.trackFile(blob, 's/home')
+        const upload = await FileUploadHandler.trackFile(blob, 's/team')
 
         const wallet = await WalletHandler.trackWallet(walletConfig);
         const f =  await FileIo.trackIo(wallet, '1.0.8')
 
         const uploadList = {}
 
-        uploadList['testFile'] = {
+        uploadList[fileName] = {
           data: null,
           exists: false,
           handler: upload,
-          key: 'testFile',
+          key: fileName,
           uploadable: await upload.getForUpload()
         }
 
-        const folder = await f.downloadFolder('s/home')
+        const folder = await f.downloadFolder('s/team')
 
         const stagger = await f.staggeredUploadFiles(uploadList, folder, {})
+        console.log(`Created file: ${fileName}`)
+        alert(`Created file: ${fileName}`)
 
         console.log(upload)
-
         console.log(stagger)
+        setPopupOpen(false)
     }
 
-    const doMoreStuff = async () => {
+    const readEmployees = async () => {
+        setLoading(true)
+
         const wallet = await WalletHandler.trackWallet(walletConfig);
         const storage = await StorageHandler.trackStorage(wallet)
 
         const s = await FileIo.trackIo(wallet)
-        const folder = await s.verifyFoldersExist(['home'])
-        const files = await s.downloadFolder('s/home')
-        const obj = {
-            rawPath: 's/home/testFile',
-            owner: 'jkl12drs4lqvhamlyrlyc3gnzr247djmgle5rrdsrh',
-            isFolder: false
+        const folder = await s.verifyFoldersExist(['team'])
+        const files = await s.downloadFolder('s/team')
+        const filePaths = Object.keys(files.folderDetails.fileChildren)
+        const owner = files.folderDetails.whoOwnsMe.toString()
+        const result = []
+        for (var i = 0; i < filePaths.length; i++){
+            if(filePaths[i] === 'undefined'){
+                continue
+            }
+            const obj = {
+                rawPath: `s/team/${filePaths[i]}`,
+                owner: owner,
+                isFolder: false
+            }
+            console.log(obj)
+            const testfile = await s.downloadFile(obj, { track: 0 })
+            const buff = await testfile.receiveBacon().arrayBuffer()
+    
+            var enc = new TextDecoder("utf-8");
+            var arr = new Uint8Array(buff)
+            var jsonReturn = JSON.parse(enc.decode(arr))
+            result.push(jsonReturn)
+            
+            
         }
-        const testfile = await s.downloadFile(obj, { track: 0 })
-
-        const buff = await testfile.receiveBacon().arrayBuffer()
-
-        var enc = new TextDecoder("utf-8");
-        var arr = new Uint8Array(buff)
-        console.log(enc.decode(arr));
-
+        setData(result)
+        console.log('DONE');
         console.log(folder)
         console.log(files)
-        console.log(buff)
-
-    }
-
-    const loadTable = () => {
-        setData([
-            { id: 1, name: 'John Doe', title: "CEO", department: "Engineering", email: 'john@example.com' },
-            { id: 2, name: 'John Doe', title: "CEO", department: "Engineering", email: 'john@example.com' },
-            { id: 3, name: 'John Doe', title: "CEO", department: "Engineering", email: 'john@example.com' },
-          ])
         setLoaded(true)
+        setLoading(false)
     }
+
+    
     return(
         <section>
             <Title title={"People"} icon={Icon}/>
-            <button onClick={doStuff}>do stuff</button>
-            <button onClick={doMoreStuff}>do more stuff</button>
+            <button onClick={readEmployees}>Read Employees</button>
             {popupOpen &&
-            <Button 
+            
+            <button 
                 style={{margin:"10px"}}
                 onClick={handleAddEmployee}> Add Employee
-            </Button>
+            </button>
             }
-            <Button 
+            <button 
                 style={{margin:"10px"}}
                 onClick={handlePopupClick}> {popupOpen ? "Close" : "Add Employee"}
-            </Button>
+            </button>
+            {!loaded && loading ? <p style={{color:"#fff"}}>loading...</p> : null}
             {popupOpen && 
             <div style={{width: "500px", margin:"0px auto"}}>
                 <form name="employee-form">
-                {Object.keys(data[0]).map(text => 
+                {employeeInfo.map(text => 
                     <InputGroup className="mb-3" key={text}>
                         <InputGroup.Text id="inputGroup-sizing-default" style={{width:"125px", textAlign:"right"}}>
                         {titleCase(text)}
@@ -209,10 +233,10 @@ function People() {
                     </InputGroup>
                 )}
             </form></div>}
-            {loaded ? 
+            {!loading && loaded ? 
             <div className="container">
-                {!popupOpen && <Table datas={data}/>}
-            </div> : <p>Loading...</p>}
+                {!popupOpen && loaded && <Table datas={data}/>}
+            </div> : null}
         </section>
     );
 }
