@@ -6,15 +6,12 @@ import { Title } from "../title";
 import { BsFillPeopleFill as Icon} from "react-icons/bs";
 import Table from "./table";
 import "./people.css"
-
 import { 
     FileIo,
     FileUploadHandler, 
     WalletHandler,
     StorageHandler
 } from "jackal.js"
-
-
 
 
 function People() {

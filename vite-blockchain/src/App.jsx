@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/nav';
+import Home from './components/home';
 import People from './components/people';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         </header>
         <div className = "content">
           <Routes>
+            <Route path="/" element={<Home />}/>
             <Route path="/people" element={<People />}/>
           </Routes>
         </div>

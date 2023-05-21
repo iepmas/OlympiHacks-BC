@@ -1,4 +1,22 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
 :root {
+  --c1: #1b2845;
+  --c2: #274060;
+  --c3: #dad2f3;
   --blue1: #0729db;
   --blue2: #3171f4;
   --blue3: #83aafa;
@@ -21,29 +39,36 @@
 /* NAV BAR */
 
 .navbar {
-  background-color: #f2f2f2;
+  background-color: var(--c3);
+  border-bottom: 2px solid #2b3443;
   padding: 10px;
+  height: 60px;
+  position: fixed !important;
+  top: 0;
+  z-index: 1;
+  width: 100%;
 }
 
 .navbar-list {
   display: flex;
   list-style-type: none;
-  margin: 0;
+  margin-left: 0px;
   padding: 0;
 }
 
 .navbar-item {
-  margin-right: 10px;
+  margin-right: 20px;
+  margin-top: 10px;
 }
 
 .navbar-link {
-  color: #333;
+  color: #000;
   text-decoration: none;
   padding: 5px;
 }
 
 .navbar-link:hover {
-  background-color: #333;
+  background-color: var(--c2);
   color: #fff;
   border-radius: 5px;
 }
@@ -52,16 +77,16 @@
   text-align: center;
 }
 
-.App-header {
-
-}
 
 html, body, #root, .App {
-  background-color: var(--background);
+  background-color: var(--c1);
+  background-image: linear-gradient(315deg, var(--c1) 0%, var(--c2) 74%);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .App {
-  background-color: var(--background);
   background-size : cover;
   font-family:  'Roboto', Arial, sans-serif;
   height: 100%;
@@ -73,10 +98,9 @@ html, body, #root, .App {
 }
 
 .content{
-  margin-top: 0px;
+  margin-top: 60px;
   padding: 1px 16px;
   height: 100%;
-  background-color: var(--background);
 
 }
 
