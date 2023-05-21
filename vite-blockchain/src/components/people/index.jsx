@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Title } from "../title";
@@ -204,7 +203,7 @@ function People() {
     return(
         <section>
             <Title title={"People"} icon={Icon}/>
-            <button onClick={readEmployees}>Read Employees</button>
+            <button onClick={readEmployees}>Load Employees</button>
             {popupOpen &&
             
             <button 

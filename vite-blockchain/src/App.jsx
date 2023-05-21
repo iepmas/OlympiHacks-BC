@@ -3,6 +3,8 @@ import './App.css';
 import Navbar from './components/nav';
 import Home from './components/home';
 import People from './components/people';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
